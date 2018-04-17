@@ -3,7 +3,6 @@ import logo from './logo.svg';
 import './App.css';
 import DatePicker from 'react-date-picker'
 import Timesheet from './components/Timesheet';
-import momment from 'moment';
 
 class App extends Component {
   constructor(props) {
