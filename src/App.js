@@ -1,27 +1,43 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-
-const TSHEETS_TOKEN = 'S.4__5bef0f3becb66d52b38539bea60456fa8a76b06a';
-const url = 'https://rest.tsheets.com/api/v1/timesheets?start_date=2018-04-13&end_date=2018-04-13&supplemental_data=yes';
-const obj = { json: true, headers: { 'Authorization': `Bearer S.4__5bef0f3becb66d52b38539bea60456fa8a76b06a` } };
-fetch(url, obj)
-  //.then(result => result.json())
-  //.then(r => console.log(r));
-
+import DatePicker from 'react-date-picker'
+import Timesheet from './components/Timesheet';
+import momment from 'moment';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      dateSelected: null,
+      timesheets: null
+    };
 
+    this.onDateChange = this.onDateChange.bind(this);
+  }
+
+  componentWillMount()
+  {
+    console.log('mounting');
+    this.onDateChange(new Date())
+  }
+
+  onDateChange(newDate) {
+    console.log(newDate);
+    fetch(`https://hackberry-spring.herokuapp.com/time?date=${newDate.toISOString().split('T')[0]}`)
+      .then(r => r.json())
+      .then(j => {console.log(j);this.setState({ timesheets: j })});
+    this.setState({dateSelected : newDate});
   }
 
   render() {
-
-
     return (
       <div>
+        <DatePicker
+          value={this.state.dateSelected}
+          onChange={this.onDateChange} />
+        {this.state.timesheets ? <Timesheet value={this.state.timesheets} /> : <div>Loading</div>}
       </div>
     );
   }
