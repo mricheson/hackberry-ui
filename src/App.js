@@ -10,7 +10,7 @@ class App extends Component {
 
     this.state = {
       dateSelected: null,
-      timesheets: null
+      attendanceReport: null
     };
 
     this.onDateChange = this.onDateChange.bind(this);
@@ -24,10 +24,10 @@ class App extends Component {
 
   onDateChange(newDate) {
     console.log(newDate);
-    fetch(`https://hackberry-spring.herokuapp.com/time?date=${newDate.toISOString().split('T')[0]}`)
+    this.setState({dateSelected : newDate,attendanceReport:null});
+    fetch(`https://hackberry-api-dev.herokuapp.com/time?date=${newDate.toISOString().split('T')[0]}`)
       .then(r => r.json())
-      .then(j => {console.log(j);this.setState({ timesheets: j })});
-    this.setState({dateSelected : newDate});
+      .then(j => {console.log(j);this.setState({ attendanceReport: j })});
   }
 
   render() {
@@ -36,7 +36,7 @@ class App extends Component {
         <DatePicker
           value={this.state.dateSelected}
           onChange={this.onDateChange} />
-        {this.state.timesheets ? <Timesheet value={this.state.timesheets} /> : <div>Loading</div>}
+        {this.state.attendanceReport ? <Timesheet attendanceReport={this.state.attendanceReport} /> : <div>Loading</div>}
       </div>
     );
   }
