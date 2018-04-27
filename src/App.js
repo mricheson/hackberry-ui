@@ -33,7 +33,7 @@ class App extends Component {
     return (
       <div className="container">
         <div className="row justify-content-center">
-          <DatePicker className="m-1"
+          <DatePicker className="m-3"
             value={this.state.dateSelected}
             onChange={this.onDateChange}
             clearIcon={null} />

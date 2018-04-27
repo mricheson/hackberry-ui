@@ -1,5 +1,6 @@
 import React from 'react'
 import EmployeeAttendance from './EmployeeAttendance'
+import ReactTooltip from 'react-tooltip';
 
 function getMinutesLate(date) {
     if (!date)
@@ -28,19 +29,18 @@ function interpretMinutesLate(late) {
 
 export default ({ loading, attendanceReport }) =>
     (
-        !loading ? (
-        <table className="table table-xs table-hover">
-            <thead>
-                <tr>
-                    <th>Employee</th>
-                    <th>Start Time</th>
-                    <th>Status</th>
-                    <th>Notes</th>
-                </tr>
-            </thead>
-            <tbody>
-                {attendanceReport.timesheets.map(employee => (<EmployeeAttendance employee={employee} jobCodes={attendanceReport.jobcodes}/>))}
-                {/* {attendanceReport.timesheets.map(employee => (
+        !loading ? (<div>
+            <table className="table table-responsive table-sm table-hover">
+                <thead>
+                    <tr>
+                        <th >Employee</th>
+                        <th className="text-right">Start Time</th>
+                        <th className="text-left">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {attendanceReport.timesheets.map(employee => (<EmployeeAttendance employee={employee} jobCodes={attendanceReport.jobcodes} />))}
+                    {/* {attendanceReport.timesheets.map(employee => (
                     <tr key={employee.user.id + employee.clockInTime}>
                         <td>{employee.user.last_name}, {employee.user.first_name}</td>
                         <td className={(new Date(employee.clockInTime).getHours() < 5 && new Date(employee.clockInTime).getHours() > 1) ? 'earlyPunch' : 'normal'}>
@@ -56,8 +56,9 @@ export default ({ loading, attendanceReport }) =>
 
                     </tr>
                 ))} */}
-            </tbody>
-        </table>)
-        :
-        <div />
+                </tbody>
+            </table>
+            <ReactTooltip /></div>)
+            :
+            <div />
     );
