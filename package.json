@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "html2pdf.js": "^0.8.2",
     "react": "^16.3.1",
     "react-date-picker": "^6.10.1",
     "react-dom": "^16.3.1",
